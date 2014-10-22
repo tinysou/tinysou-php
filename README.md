@@ -1,8 +1,6 @@
 tinysou-php
 ==============
 
-[![Build Status](https://travis-ci.org/yandy/tinysou-php.svg?branch=master)](https://travis-ci.org/yandy/tinysou-php)
-
 Tinysou PHP Client
 
 ## Usage
@@ -157,11 +155,11 @@ $client->autocomplete('blog', array('q' => 't', 'c' => 'posts'));
 
 ## Examples
 
-See [examples](https://github.com/yandy/tinysou-php/tree/master/examples)
+See [examples](https://github.com/tinysou/tinysou-php/tree/master/examples)
 
 ## Contributing
 
-1. Fork it ( https://github.com/yandy/tinysou-php/fork )
+1. Fork it ( https://github.com/tinysou/tinysou-php/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
