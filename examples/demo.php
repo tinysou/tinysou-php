@@ -12,10 +12,44 @@ try {
       ));
     var_dump($blog);
     echo "=========DONE\r\n\r\n";
+
     echo "=========List Engines\r\n";
     $list = $client->engines();
     var_dump($list);
     echo "=========DONE\r\n\r\n";
+
+    echo "=========Create Collection\r\n";
+    $post = $client->create_collection('test-blog', array(
+                'name' => 'posts',
+                'field_types' => array(
+                    'title' => 'string',
+                    'body' => 'text'
+                )
+    ));
+    var_dump($post);
+    echo "=========DONE\r\n\r\n";
+
+    echo "=========List Collection\r\n";
+    $list = $client->collections('test-blog', 'posts');
+    var_dump($post);
+    echo "=========DONE\r\n\r\n";
+
+    echo "=========Create Document\r\n";
+    $doc = $client->create_document('test-blog', 'posts', array(
+                'title' => 'First Post',
+                'body' => 'This is my first post'
+    ));
+    var_dump($doc);
+    echo "=========DONE\r\n\r\n";
+
+    echo "=========Create 2nd Document\r\n";
+    $doc2 = $client->create_document('test-blog', 'posts', array(
+                'title' => 'Second Post',
+                'body' => 'This is my second post'
+    ));
+    var_dump($doc2);
+    echo "=========DONE\r\n\r\n";
+
     echo "=========DELETE\r\n";
     $res = $client->delete_engine('test-blog');
     var_dump($res);

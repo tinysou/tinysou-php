@@ -17,38 +17,38 @@ class TinySouBadRequestException extends TinySouException {
 }
 
 class TinySouAuthorizationException extends TinySouException {
-  public function __construct($message, $code = 0, Exception $previous = null) {
+  public function __construct($message = 'Authentication Required', $code = 0, Exception $previous = null) {
     parent::__construct($message, 401, $previous);
   }
 }
 
 class TinySouForbiddenException extends TinySouException {
-  public function __construct($message, $code = 0, Exception $previous = null) {
+  public function __construct($message = 'Forbidden', $code = 0, Exception $previous = null) {
     parent::__construct($message, 403, $previous);
   }
 }
 
 class TinySouNotFoundException extends TinySouException {
-  public function __construct($message, $code = 0, Exception $previous = null) {
+  public function __construct($message = 'Not Found', $code = 0, Exception $previous = null) {
     parent::__construct($message, 404, $previous);
   }
 }
 
-class TinySouNotAcceptableException extends TinySouException {
-  public function __construct($message, $code = 0, Exception $previous = null) {
-    parent::__construct($message, 406, $previous);
+class TinySouInternalErrorException extends TinySouException {
+  public function __construct($message = 'Internal Error', $code = 0, Exception $previous = null) {
+    parent::__construct($message, 500, $previous);
   }
 }
 
 class TinySouServiceUnavailable extends TinySouException {
-  public function __construct($message, $code = 0, Exception $previous = null) {
+  public function __construct($message = 'Service Unavailable', $code = 0, Exception $previous = null) {
     parent::__construct($message, 503, $previous);
   }
 }
 
 class TinySou {
   const VERSION   = '0.0.1';
-  const BASE_URI  = 'http://api.tinysou.com/v1/'
+  const BASE_URI  = 'http://api.tinysou.com/v1/';
 
   private $_token;
   private $_timeout = 30;
@@ -413,23 +413,27 @@ class TinySou {
       }
     } else {
       switch($http_code) {
+        case 400:
+          $message = json_decode($response);
+          throw new TinySouBadRequestException($message['errors']);
+          break;
         case 401:
-        throw new TinySouAuthorizationException($message);
-        break;
+          throw new TinySouAuthorizationException();
+          break;
         case 403:
-        throw new TinySouForbiddenException($message);
-        break;
+          throw new TinySouForbiddenException();
+          break;
         case 404:
-        throw new TinySouNotFoundException($message);
-        break;
-        case 406:
-        throw new TinySouNotAcceptableException($message);
-        break;
+          throw new TinySouNotFoundException();
+          break;
+        case 500:
+          throw new TinySouInternalErrorException;
+          break;
         case 503:
-        throw new TinySouServiceUnavailable($message);
-        break;
+          throw new TinySouServiceUnavailable();
+          break;
         default:
-        throw new TinySouException($message, $http_code);
+          throw new TinySouException($response, $http_code);
       }
     }
   }
